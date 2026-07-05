@@ -10,11 +10,14 @@ profile/private/
 jobs/*.md
 !jobs/TEMPLATE.md
 jobs/sources.txt
+jobs/search.config.json
 jobs/private/
 salary/benchmarks.json
 salary/currency.json
+salary/display.json
 workspace/**/*.pdf
 workspace/**/*.docx
+workspace/**/*.json
 workspace/**/*.png
 workspace/**/*.jpg
 workspace/**/*.jpeg

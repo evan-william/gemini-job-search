@@ -17,14 +17,17 @@ profile/candidate.pdf
 profile/candidate.raw.txt
 jobs/first-target.md
 jobs/sources.txt
+jobs/search.config.json
 salary/benchmarks.json
 salary/currency.json
+salary/display.json
 workspace/audits/*.md
 workspace/portfolio/*.md
 workspace/outreach/*.md
 workspace/interviews/*.md
 workspace/prompts/*.md
 workspace/scrape/*.md
+workspace/scrape/*.json
 workspace/resume/*.md
 workspace/resume/*.tex
 ```

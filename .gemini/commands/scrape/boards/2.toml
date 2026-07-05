@@ -1,0 +1,13 @@
+description = "Run company-board-only scraping and show the top 2 matches."
+
+prompt = """
+# /scrape:boards:2 - Company Boards Top 2
+
+Run the local deterministic command first:
+
+```bash
+npm run scrape:boards:2
+```
+
+Then summarize both matches from `jobs/sources.txt`.
+"""

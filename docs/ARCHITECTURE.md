@@ -10,9 +10,11 @@ The local layer is deterministic and uses no model calls.
 - uses `pdfplumber`/`pypdf` first and a built-in Node fallback second
 - reads `profile/candidate.md` as the private generated profile cache
 - reads job Markdown
-- reads public career pages or saved HTML for job shortlists
-- supports public HTML, JobPosting JSON-LD, and Ashby-hosted boards
+- discovers jobs from public job APIs, company boards, and optional source files
+- writes the raw scrape collection before ranking
+- supports public HTML, JobPosting JSON-LD, Ashby, Greenhouse, and Lever boards
 - detects visible compensation ranges and converts them with local rates
+- uses local display currency preferences for primary and secondary pay output
 - extracts normalized terms
 - calculates overlap and missing terms
 - generates audit, portfolio, outreach, scrape, salary, and interview drafts
@@ -50,6 +52,14 @@ scripts/import-cv.js
 profile/candidate.md (local generated cache, ignored)
 profile/candidate.example.md (public demo fallback)
 jobs/*.md
+jobs/search.config.json
+jobs/sources.txt
+      |
+      v
+src/core/scrape.js
+      |
+      +-- workspace/scrape/scrape-results.json
+      +-- workspace/scrape/ranked-matches.md
       |
       v
 src/core/scoring.js
@@ -59,9 +69,9 @@ src/core/scoring.js
       +-- workspace/outreach/
       +-- workspace/interviews/
       +-- workspace/prompts/
-      +-- workspace/scrape/
 
 salary/currency.example.json
+salary/display.example.json
       |
       v
 src/core/currency.js

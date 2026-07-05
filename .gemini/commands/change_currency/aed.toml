@@ -1,0 +1,5 @@
+description = "Set secondary display currency to AED."
+
+prompt = """
+Run `npm run change_currency -- AED`, then show the updated currency settings.
+"""

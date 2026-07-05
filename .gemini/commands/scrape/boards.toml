@@ -1,0 +1,16 @@
+description = "Run company-board-only scraping from jobs/sources.txt and show top 10."
+
+prompt = """
+# /scrape:boards - Company Boards Top 10
+
+Run the local deterministic command first:
+
+```bash
+npm run scrape:boards
+```
+
+This uses `jobs/sources.txt` only. Summarize the top ranked matches and mention
+where the report and raw collection were written.
+
+Do not use the bundled sample unless the user explicitly asks for demo mode.
+"""

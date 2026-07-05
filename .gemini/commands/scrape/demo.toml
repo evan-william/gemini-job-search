@@ -1,0 +1,14 @@
+description = "Run the bundled sample scrape only. This is not real discovery."
+
+prompt = """
+# /scrape:demo - Demo Scrape
+
+Run:
+
+```bash
+npm run scrape:demo
+```
+
+Say clearly that this uses `samples/job-posting.md` and is not real job
+discovery.
+"""

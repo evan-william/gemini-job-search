@@ -111,16 +111,75 @@ Paste the job description, then run:
 node src/cli.js launch --profile profile/candidate.md --job jobs/first-target.md
 ```
 
-## Search Public Career Pages
+## Discover Jobs Across Sources
 
-For one public company career page, run:
+Run broad discovery:
 
 ```bash
-node src/cli.js scrape --profile profile/candidate.md --source https://company.com/careers --target-currency IDR --prefer-currency USD
+npm run scrape
 ```
 
-Add `--show` to print the top matches in the terminal or Codex chat while still
-saving the full report:
+That collects jobs from configured public providers and company boards, writes
+the raw collection, then ranks the roles against your profile.
+
+Outputs:
+
+```text
+workspace/scrape/scrape-results.json
+workspace/scrape/ranked-matches.md
+```
+
+Choose how many ranked matches to print in the terminal or Codex chat:
+
+```bash
+npm run scrape:show:best  # top 1
+npm run scrape:show:2     # top 2
+npm run scrape:show:7     # top 7
+npm run scrape:show:8     # top 8
+npm run scrape:10         # top 10
+npm run scrape:show:25    # top 25
+npm run scrape:show:50    # top 50
+```
+
+`npm run scrape` and `npm run scrape:show` both print the top 10 by default.
+Every counted `show` command also writes a chat-ready copy such as
+`workspace/scrape/top-25.md` or `workspace/scrape/openai-top-10.md`.
+
+To customize discovery, copy:
+
+```text
+jobs/search.config.example.json
+```
+
+to:
+
+```text
+jobs/search.config.json
+```
+
+Then edit your target roles, locations, providers, and boards. The private
+config is ignored by git.
+
+You can also add company boards to:
+
+```text
+jobs/sources.txt
+```
+
+Then run board-only discovery:
+
+```bash
+npm run scrape:boards       # top 10
+npm run scrape:boards:best  # top 1
+npm run scrape:boards:2     # top 2
+npm run scrape:boards:8     # top 8
+npm run scrape:boards:50    # top 50
+```
+
+Supported source types include public job APIs, readable public HTML,
+JobPosting structured data, Ashby, Greenhouse, and Lever boards.
+
+For one specific public company career page:
 
 ```bash
 node src/cli.js scrape --profile profile/candidate.md --source https://company.com/careers --target-currency IDR --prefer-currency USD --show
@@ -129,40 +188,9 @@ node src/cli.js scrape --profile profile/candidate.md --source https://company.c
 Use `--print` instead of `--show` only when you want the full Markdown report
 printed into the terminal/chat.
 
-For multiple real sources, copy:
-
-```text
-jobs/sources.example.txt
-```
-
-to:
-
-```text
-jobs/sources.txt
-```
-
-Put one public career URL per line, then run:
-
-```bash
-npm run scrape
-```
-
-To save the report and also print the top 5 matches:
-
-```bash
-npm run scrape:show
-```
-
-This writes a ranked shortlist to:
-
-```text
-workspace/scrape/
-```
-
-The scraper works best on readable public HTML, JobPosting structured data, and
-Ashby-hosted job boards such as `https://jobs.ashbyhq.com/<company>`. Some large
-job boards block automated scraping; when that happens, paste the job post into
-`jobs/first-target.md` and run the normal launch workflow.
+Some large job boards block automated scraping or prohibit it in their terms.
+Use their official APIs, public company career pages, or saved job posts instead
+of forcing blocked pages.
 
 For the bundled sample only:
 
@@ -173,19 +201,71 @@ npm run scrape:demo:show
 
 ## Compensation Intelligence
 
-The repo does not assume everyone wants USD. Scrape reports can keep the
-original listing currency, convert to a target currency, and optionally rank
-jobs that mention a preferred pay currency first.
+The repo does not assume everyone wants USD. Scrape reports keep the original
+listing currency, then show your primary and secondary display currencies when
+conversion is possible.
+
+Default display:
+
+```text
+Primary currency: USD
+Secondary currency: IDR
+Preferred pay currency: USD
+```
+
+Change the secondary display currency:
+
+```bash
+npm run change_currency:idr
+npm run change_currency:eur
+npm run change_currency:sgd
+npm run change_currency:jpy
+npm run change_currency -- THB
+```
+
+Show or list supported currencies:
+
+```bash
+npm run currency:show
+npm run currency:list
+```
+
+Supported aliases include:
+
+```text
+usd, idr, eur, gbp, sgd, aud, cad, chf, cny, hkd, jpy, krw,
+inr, myr, nzd, php, thb, vnd, aed, sar, brl, mxn
+```
+
+After changing currency, all scrape commands use the new display automatically:
+
+```bash
+npm run scrape:show:10
+npm run scrape:boards:10
+```
 
 Examples:
 
 ```bash
-node src/cli.js scrape --profile profile/candidate.md --source jobs.html --target-currency IDR
-node src/cli.js scrape --profile profile/candidate.md --source jobs.html --target-currency IDR --prefer-currency USD
+node src/cli.js scrape --profile profile/candidate.md --source jobs.html --target-currency USD --secondary-currency IDR
+node src/cli.js scrape --profile profile/candidate.md --source jobs.html --target-currency USD --secondary-currency EUR --prefer-currency USD
 node src/cli.js salary --company "BrightLoop" --target-currency IDR
 ```
 
-Currency conversion uses local rates. Copy:
+Currency display preferences are local. Copy:
+
+```text
+salary/display.example.json
+```
+
+to:
+
+```text
+salary/display.json
+```
+
+or use the `change_currency:*` commands. Currency conversion uses local rates.
+Copy:
 
 ```text
 salary/currency.example.json
@@ -207,8 +287,17 @@ ignored by git.
 | `npm run launch` | End-to-end local workflow |
 | `npm run import-cv` | Convert `profile/candidate.pdf` into local profile/resume drafts |
 | `npm run cv:refresh` | Force-regenerate `profile/candidate.md` from the latest PDF |
-| `npm run scrape` | Rank jobs and visible pay from real sources in `jobs/sources.txt` |
-| `npm run scrape:show` | Save the real scrape report and print top matches |
+| `npm run currency:show` | Show primary, secondary, and preferred pay currencies |
+| `npm run change_currency:idr` | Set secondary display currency to IDR |
+| `npm run change_currency:eur` | Set secondary display currency to EUR |
+| `npm run change_currency -- THB` | Set secondary display currency to any supported code |
+| `npm run scrape` | Discover jobs across public providers/boards and print top 10 |
+| `npm run scrape:show:best` | Discover jobs and print top 1 |
+| `npm run scrape:show:2` | Discover jobs and print top 2 |
+| `npm run scrape:show:8` | Discover jobs and print top 8 |
+| `npm run scrape:10` | Discover jobs and print top 10 |
+| `npm run scrape:show:50` | Discover jobs and print top 50 |
+| `npm run scrape:boards` | Rank company boards from `jobs/sources.txt` and print top 10 |
 | `npm run scrape:demo` | Run the scraper against the bundled sample job |
 | `npm run scrape:demo:show` | Demo scrape with top matches printed |
 | `npm run audit` | Recruiter and ATS fit audit |
@@ -227,14 +316,43 @@ repo therefore works locally first and treats model calls as optional review.
 For Gemini:
 
 ```bash
-npm run prompt
+gemini
 ```
 
-Then paste `workspace/prompts/full-job-posting.md` into Gemini, AI Studio,
-Antigravity, or any model interface you trust.
+Project-local slash commands mirror the npm scripts:
 
-The repo also includes project-local Gemini CLI commands in `.gemini/commands/`
-for users whose Gemini CLI setup supports them.
+```text
+/scrape
+/scrape:best
+/scrape:2
+/scrape:10
+/scrape:25
+/scrape:50
+/scrape:show:best
+/scrape:show:2
+/scrape:show:50
+/scrape:boards
+/scrape:boards:2
+/scrape:boards:50
+/scrape:demo
+/scrape:demo:show
+/currency
+/currency:list
+/change_currency:idr
+/change_currency:eur
+/change_currency:sgd
+/change_currency:thb
+/change_currency:mxn
+/setup:cv
+```
+
+These commands tell Gemini CLI to run the same local npm scripts Codex uses.
+The local CLI remains the source of truth, so Gemini spends tokens reviewing
+results instead of re-scraping or re-ranking in the model.
+
+If your Gemini CLI setup does not load project slash commands, run the same npm
+scripts directly and paste `workspace/prompts/full-job-posting.md` into Gemini,
+AI Studio, Antigravity, or any model interface you trust.
 
 For Codex:
 
@@ -280,11 +398,14 @@ profile/candidate.pdf
 profile/candidate.raw.txt
 jobs/*.md
 jobs/sources.txt
+jobs/search.config.json
 salary/benchmarks.json
 salary/currency.json
+salary/display.json
 workspace/**/*.md
 workspace/**/*.tex
 workspace/**/*.pdf
+workspace/**/*.json
 ```
 
 Only examples, templates, source code, and docs are meant to be pushed.
@@ -300,6 +421,7 @@ gemini-job-search-os/
 |   |-- ARCHITECTURE.md
 |   `-- PUSH_CHECKLIST.md
 |-- jobs/
+|   |-- search.config.example.json
 |   |-- sources.example.txt
 |   `-- TEMPLATE.md
 |-- profile/
@@ -309,7 +431,8 @@ gemini-job-search-os/
 |-- salary/
 |   |-- README.md
 |   |-- benchmarks.example.json
-|   `-- currency.example.json
+|   |-- currency.example.json
+|   `-- display.example.json
 |-- samples/job-posting.md
 |-- scripts/
 |   |-- extract-pdf.py
@@ -322,8 +445,6 @@ gemini-job-search-os/
 |   `-- core/
 |       |-- currency.js
 |       |-- files.js
-|       |-- scoring.js
-|       `-- scrape.js
 |       |-- scoring.js
 |       `-- scrape.js
 `-- workspace/             # ignored generated outputs

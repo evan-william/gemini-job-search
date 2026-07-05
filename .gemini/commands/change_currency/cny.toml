@@ -1,0 +1,5 @@
+description = "Set secondary display currency to CNY."
+
+prompt = """
+Run `npm run change_currency -- CNY`, then show the updated currency settings.
+"""

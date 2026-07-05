@@ -1,0 +1,5 @@
+description = "Set secondary display currency to JPY."
+
+prompt = """
+Run `npm run change_currency:jpy`, then show the updated currency settings.
+"""

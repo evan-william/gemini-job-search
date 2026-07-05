@@ -14,8 +14,11 @@ profile/candidate.backup-*.md
 jobs/*.md
 !jobs/TEMPLATE.md
 jobs/sources.txt
+jobs/search.config.json
 salary/benchmarks.json
 salary/currency.json
+salary/display.json
+workspace/**/*.json
 profile/private/
 jobs/private/
 .env

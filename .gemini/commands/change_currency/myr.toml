@@ -1,0 +1,5 @@
+description = "Set secondary display currency to MYR."
+
+prompt = """
+Run `npm run change_currency:myr`, then show the updated currency settings.
+"""

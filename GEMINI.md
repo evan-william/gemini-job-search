@@ -37,8 +37,24 @@ projects, metrics, degrees, certifications, publications, or references.
 - Do not repeatedly paste full CVs, PDFs, or giant job pages into the model.
 - Prefer generated summaries under `workspace/` over raw source documents.
 - For job search, rank locally first, then review the strongest 3-5 roles.
+- Use the project slash commands or npm scripts for scraping:
+  `/scrape`, `/scrape:best`, `/scrape:2`, `/scrape:10`, `/scrape:50`,
+  `/scrape:boards`, `/scrape:boards:2`, and `/scrape:boards:50`.
+- If command output contains `CHAT_ROOM_OUTPUT_START` and
+  `CHAT_ROOM_OUTPUT_END`, paste that block content into the chat response
+  exactly, including every numbered job item, `Company:`, `Location:`, and
+  `Job link:` line.
+- If command output contains `REQUESTED_MATCHES` and `SHOWING_MATCHES`, include
+  exactly that many numbered job items. Do not summarize a top-25/top-10/top-8
+  request as only the best match.
 - If currency conversion is needed, use `salary/currency.json` locally instead
   of asking the model to estimate exchange rates.
+- For display currency changes, use `/currency`, `/currency:list`, or
+  `/change_currency:<code>`. For other supported codes, run
+  `npm run change_currency -- <CODE>`. These call the same local scripts Codex
+  uses.
+  Supported aliases include USD, IDR, EUR, GBP, SGD, AUD, CAD, CHF, CNY, HKD,
+  JPY, KRW, INR, MYR, NZD, PHP, THB, VND, AED, SAR, BRL, and MXN.
 - When the user hits a usage limit, stop model-heavy workflows and continue
   with local commands.
 

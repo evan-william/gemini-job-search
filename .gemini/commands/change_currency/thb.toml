@@ -1,0 +1,5 @@
+description = "Set secondary display currency to THB."
+
+prompt = """
+Run `npm run change_currency -- THB`, then show the updated currency settings.
+"""

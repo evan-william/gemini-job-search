@@ -1,0 +1,5 @@
+description = "Set secondary display currency to HKD."
+
+prompt = """
+Run `npm run change_currency -- HKD`, then show the updated currency settings.
+"""

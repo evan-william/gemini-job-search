@@ -23,6 +23,24 @@ export async function readCurrencyConfig() {
   }
 }
 
+export async function readCurrencyDisplayConfig() {
+  const defaults = {
+    primaryCurrency: "USD",
+    secondaryCurrency: "IDR",
+    preferCurrency: "USD"
+  };
+
+  try {
+    return { ...defaults, ...JSON.parse(await readText("salary/display.json")) };
+  } catch {
+    try {
+      return { ...defaults, ...JSON.parse(await readText("salary/display.example.json")) };
+    } catch {
+      return defaults;
+    }
+  }
+}
+
 export function normalizeCurrency(value) {
   if (!value) return "";
   const raw = String(value).trim();
@@ -93,12 +111,17 @@ export function convertRange(range, targetCurrency, config) {
 export function formatCompensation(compensation, options = {}) {
   if (!compensation) return "Not listed";
   const original = formatRange(compensation);
-  const target = normalizeCurrency(options.targetCurrency);
-  const converted = target && target !== compensation.currency
-    ? convertRange(compensation, target, options.config)
-    : null;
-  if (!converted) return original;
-  return `${original} / approx ${formatRange(converted)}`;
+  const displayCurrencies = [
+    options.targetCurrency,
+    options.secondaryCurrency
+  ].map(normalizeCurrency).filter(Boolean);
+  const uniqueTargets = [...new Set(displayCurrencies)]
+    .filter((currency) => currency !== compensation.currency);
+  const converted = uniqueTargets
+    .map((currency) => convertRange(compensation, currency, options.config))
+    .filter(Boolean);
+  if (!converted.length) return original;
+  return [original, ...converted.map((range) => `approx ${formatRange(range)}`)].join(" / ");
 }
 
 export function formatRange(range) {

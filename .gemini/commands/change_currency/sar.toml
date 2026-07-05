@@ -1,0 +1,5 @@
+description = "Set secondary display currency to SAR."
+
+prompt = """
+Run `npm run change_currency -- SAR`, then show the updated currency settings.
+"""

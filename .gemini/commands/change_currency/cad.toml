@@ -1,0 +1,5 @@
+description = "Set secondary display currency to CAD."
+
+prompt = """
+Run `npm run change_currency:cad`, then show the updated currency settings.
+"""

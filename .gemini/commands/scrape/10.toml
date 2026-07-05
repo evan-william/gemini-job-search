@@ -1,0 +1,16 @@
+description = "Run real job discovery and show the top 10 ranked matches."
+
+prompt = """
+# /scrape:10 - Top 10 Discovery Matches
+
+Run the local deterministic command first:
+
+```bash
+npm run scrape:10
+```
+
+Then summarize the top 10 ranked matches from the terminal output. Mention
+where the full ranked report and raw scrape collection were written.
+
+Do not re-rank manually unless the local command fails.
+"""

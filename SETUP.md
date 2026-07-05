@@ -93,25 +93,73 @@ node src/cli.js salary --company "BrightLoop" --target-currency IDR
 
 `salary/currency.json` is ignored by git.
 
-## Public Job Search
+For display currency preferences, copy:
 
-Rank public career-page jobs against your profile:
-
-```bash
-node src/cli.js scrape --profile profile/candidate.md --source https://company.com/careers --target-currency IDR --prefer-currency USD
+```text
+salary/display.example.json
 ```
 
-Or copy `jobs/sources.example.txt` to `jobs/sources.txt`, add one real source
-per line, then run:
+to:
+
+```text
+salary/display.json
+```
+
+or run:
+
+```bash
+npm run currency:show
+npm run change_currency:idr
+npm run change_currency:eur
+npm run change_currency:sgd
+npm run change_currency -- THB
+```
+
+`salary/display.json` is ignored by git. Scrape output keeps the original
+listing currency and adds the configured primary/secondary display currencies
+when conversion is possible.
+
+## Public Job Discovery
+
+Collect jobs from public providers and company boards, then rank them against
+your profile:
 
 ```bash
 npm run scrape
 ```
 
-Use this when you want the ranked jobs printed in the terminal or Codex chat:
+Raw collected jobs are written to:
+
+```text
+workspace/scrape/scrape-results.json
+```
+
+Ranked matches are written to:
+
+```text
+workspace/scrape/ranked-matches.md
+```
+
+Print the ranked shortlist directly:
 
 ```bash
-npm run scrape:show
+npm run scrape:show:best
+npm run scrape:show:2
+npm run scrape:show:8
+npm run scrape:10
+npm run scrape:show:50
+```
+
+Copy `jobs/search.config.example.json` to `jobs/search.config.json` to change
+target roles, locations, providers, and boards. Copy `jobs/sources.example.txt`
+to `jobs/sources.txt` for extra company career pages.
+
+For board-only discovery:
+
+```bash
+npm run scrape:boards
+npm run scrape:boards:8
+npm run scrape:boards:50
 ```
 
 Use `--target-currency` to compare pay in your local currency and

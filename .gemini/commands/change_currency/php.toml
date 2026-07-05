@@ -1,0 +1,5 @@
+description = "Set secondary display currency to PHP."
+
+prompt = """
+Run `npm run change_currency -- PHP`, then show the updated currency settings.
+"""

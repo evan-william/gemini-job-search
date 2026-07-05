@@ -8,7 +8,8 @@ implementation and product angle are different.
 - Gemini-compatible prompt pack and project-local slash commands
 - Codex-compatible `AGENTS.md` instructions and npm-script workflow
 - zero-dependency local demo
-- public career page scrape ranking
+- multi-source job discovery with raw scrape collection before ranking
+- public career page, Ashby, Greenhouse, Lever, and public job API support
 - target-currency conversion and preferred-pay-currency ranking
 - portfolio proof generator
 - recruiter objection analysis

@@ -1,9 +1,11 @@
-# Copy this file to jobs/sources.txt and replace the examples with real public
-# company career pages or saved HTML files. One source per line.
+# Optional: copy this file to jobs/sources.txt and add extra public company
+# career pages or saved HTML files. Discovery mode also reads
+# jobs/search.config.json when present. One source per line.
 #
 # Good:
 # https://company.com/careers
 # https://jobs.ashbyhq.com/company
 # https://boards.greenhouse.io/company
+# https://jobs.lever.co/company
 #
 # Avoid scraping sites that block automation or prohibit it in their terms.

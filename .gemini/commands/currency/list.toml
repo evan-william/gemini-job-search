@@ -1,0 +1,13 @@
+description = "List supported currency codes."
+
+prompt = """
+# /currency:list - Supported Currencies
+
+Run:
+
+```bash
+npm run currency:list
+```
+
+Report the supported currency codes exactly as printed.
+"""

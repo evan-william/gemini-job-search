@@ -1,0 +1,5 @@
+description = "Set secondary display currency to IDR."
+
+prompt = """
+Run `npm run change_currency:idr`, then show the updated currency settings.
+"""

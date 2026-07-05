@@ -64,3 +64,21 @@ node src/cli.js salary --company "Example Corp" --target-currency IDR
 
 The command keeps the original currency and adds an approximate converted
 range when `--target-currency` is provided.
+
+For scrape display preferences, create:
+
+```text
+salary/display.json
+```
+
+Use `salary/display.example.json` as the template, or run:
+
+```bash
+npm run currency:show
+npm run change_currency:idr
+npm run change_currency:eur
+npm run change_currency:sgd
+```
+
+`display.json` controls the secondary currency shown in scrape output. It is
+local and ignored by git.

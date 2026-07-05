@@ -1,0 +1,16 @@
+description = "Run real job discovery and show only the single best ranked match."
+
+prompt = """
+# /scrape:best - Top 1 Discovery Match
+
+Run the local deterministic command first:
+
+```bash
+npm run scrape:show:best
+```
+
+Then summarize the single best match from the terminal output. Mention where
+the full ranked report and raw scrape collection were written.
+
+Do not re-rank manually unless the local command fails.
+"""

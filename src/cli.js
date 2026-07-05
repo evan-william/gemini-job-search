@@ -7,14 +7,15 @@ import {
   renderPortfolioPlan,
   renderPrompt
 } from "./core/scoring.js";
-import { scrapeJobs, renderScrapeReport, renderScrapeSummary } from "./core/scrape.js";
-import { convertRange, formatRange, normalizeCurrency, readCurrencyConfig } from "./core/currency.js";
+import { discoverJobs, scrapeJobs, renderScrapeReport, renderScrapeSummary } from "./core/scrape.js";
+import { convertRange, formatRange, normalizeCurrency, readCurrencyConfig, readCurrencyDisplayConfig } from "./core/currency.js";
 
 const HELP = `Gemini Job Search OS
 
 Usage:
   node src/cli.js demo
   node src/cli.js launch --profile <file> --job <file>
+  node src/cli.js scrape --profile <file> --discover --query "junior ai engineer" --target-currency IDR --show
   node src/cli.js scrape --profile <file> --source <url-or-file> --target-currency IDR --prefer-currency USD --show
   node src/cli.js scrape --profile <file> --sources jobs/sources.txt --target-currency IDR --show 10
   node src/cli.js salary --company <name>
@@ -27,6 +28,7 @@ Usage:
 Examples:
   npm run demo
   node src/cli.js audit --profile profile/candidate.md --job samples/job-posting.md
+  npm run scrape
   node src/cli.js scrape --profile profile/candidate.md --source https://example.com/careers --target-currency IDR --show
   node src/cli.js scrape --profile profile/candidate.md --sources jobs/sources.txt --target-currency IDR --print
 `;
@@ -110,30 +112,138 @@ async function runAll(flags) {
 
 async function runScrape(flags) {
   const profilePath = requireFlag(flags, "profile", "profile/candidate.md");
-  const sources = await resolveSources(flags);
   const profile = await readTextWithFallback(profilePath, "profile/candidate.example.md");
   const currencyConfig = await readCurrencyConfig();
-  const targetCurrency = flags["target-currency"] || flags.currency || "";
-  const preferCurrency = flags["prefer-currency"] || flags["pay-currency"] || "";
+  const displayConfig = await readCurrencyDisplayConfig();
+  const targetCurrency = flags["target-currency"] || flags.currency || displayConfig.primaryCurrency || "";
+  const secondaryCurrency = flags["secondary-currency"] || flags["second-currency"] || flags["2nd-currency"] || displayConfig.secondaryCurrency || "";
+  const preferCurrency = flags["prefer-currency"] || flags["pay-currency"] || displayConfig.preferCurrency || "";
   const limit = Number(flags.limit || 15);
+
+  if (flags.discover || (!flags.source && !flags.sources)) {
+    const rawOut = flags["raw-out"] || "workspace/scrape/scrape-results.json";
+    const out = flags.out || "workspace/scrape/ranked-matches.md";
+    const result = await discoverJobs({
+      profile,
+      configPath: flags.config || "jobs/search.config.json",
+      sourcesPath: flags.sources || "jobs/sources.txt",
+      query: flags.query || "",
+      limit,
+      perSourceLimit: Number(flags["per-source-limit"] || 50),
+      preferCurrency
+    });
+    const payload = {
+      date: todayISO(),
+      mode: "discovery",
+      query: flags.query || "",
+      sources: result.sources,
+      stats: result.stats,
+      errors: result.errors,
+      collectedCount: result.rawJobs.length,
+      filteredCount: result.filteredJobs.length,
+      jobs: result.rawJobs,
+      rankedJobs: result.jobs
+    };
+    await writeText(rawOut, `${JSON.stringify(payload, null, 2)}\n`);
+    const report = renderScrapeReport({
+      source: "discovery",
+      sources: result.sources,
+      jobs: result.jobs,
+      date: todayISO(),
+      targetCurrency,
+      secondaryCurrency,
+      preferCurrency,
+      currencyConfig,
+      rawOut,
+      collectedCount: result.rawJobs.length,
+      filteredCount: result.filteredJobs.length,
+      errors: result.errors
+    });
+    await writeText(out, report);
+    let display = "";
+    if (flags.print) {
+      display = report.trim();
+    } else if (flags.show) {
+      const count = flags.show === true ? 5 : flags.show;
+      display = renderScrapeSummary({
+        source: "discovery",
+        jobs: result.jobs,
+        targetCurrency,
+        secondaryCurrency,
+        preferCurrency,
+        currencyConfig,
+        count,
+        rawOut,
+        collectedCount: result.rawJobs.length
+      });
+      const displayOut = flags["display-out"] || `workspace/scrape/top-${count}.md`;
+      await writeText(displayOut, `${display}\n`);
+      display = `Display copy written to ${displayOut}\n\n${display}`;
+    }
+    return { out, display };
+  }
+
+  const sources = await resolveSources(flags);
   const batches = [];
+  const errors = [];
   for (const source of sources) {
-    const jobs = await scrapeJobs({ source, profile, limit, preferCurrency });
-    batches.push({ source, jobs });
+    try {
+      const jobs = await scrapeJobs({ source, profile, limit, preferCurrency });
+      batches.push({ source, jobs });
+    } catch (error) {
+      errors.push({ source, error: error.message });
+      batches.push({ source, jobs: [] });
+    }
   }
   const jobs = batches.flatMap((batch) => batch.jobs.map((job) => ({ ...job, source: batch.source })))
     .sort((a, b) => b.rankScore - a.rankScore || b.fit.overall - a.fit.overall)
     .slice(0, limit);
   const sourceLabel = sources.length === 1 ? sources[0] : `${sources.length} sources`;
   const out = flags.out || `workspace/scrape/${slugify(sourceLabel)}.md`;
-  const report = renderScrapeReport({ source: sourceLabel, sources, jobs, date: todayISO(), targetCurrency, preferCurrency, currencyConfig });
+  const rawOut = flags["raw-out"] || `workspace/scrape/${slugify(sourceLabel)}-results.json`;
+  await writeText(rawOut, `${JSON.stringify({
+    date: todayISO(),
+    mode: "direct",
+    sources,
+    errors,
+    collectedCount: jobs.length,
+    filteredCount: jobs.length,
+    jobs
+  }, null, 2)}\n`);
+  const report = renderScrapeReport({
+    source: sourceLabel,
+    sources,
+    jobs,
+    date: todayISO(),
+    targetCurrency,
+    secondaryCurrency,
+    preferCurrency,
+    currencyConfig,
+    rawOut,
+    collectedCount: jobs.length,
+    filteredCount: jobs.length,
+    errors
+  });
   await writeText(out, report);
   let display = "";
   if (flags.print) {
     display = report.trim();
   } else if (flags.show) {
     const count = flags.show === true ? 5 : flags.show;
-    display = renderScrapeSummary({ source: sourceLabel, jobs, targetCurrency, preferCurrency, currencyConfig, count });
+    display = renderScrapeSummary({
+      source: sourceLabel,
+      jobs,
+      targetCurrency,
+      secondaryCurrency,
+      preferCurrency,
+      currencyConfig,
+      count,
+      rawOut,
+      collectedCount: jobs.length
+    });
+    const displayOut = flags["display-out"] || `workspace/scrape/${slugify(sourceLabel)}-top-${count}.md`;
+    await writeText(displayOut, `${display}\n`);
+    display = `Display copy written to ${displayOut}\n\n${display}`;
   }
   return { out, display };
 }
@@ -210,6 +320,8 @@ async function runSalary(flags) {
   const company = flags.company || flags._[1];
   if (!company) throw new Error("Missing --company <name>");
   const currencyConfig = await readCurrencyConfig();
+  const displayConfig = await readCurrencyDisplayConfig();
+  const targetCurrency = flags["target-currency"] || flags.currency || displayConfig.secondaryCurrency || "";
   let data;
   try {
     data = JSON.parse(await readText("salary/benchmarks.json"));
@@ -229,8 +341,8 @@ async function runSalary(flags) {
   console.log(`Source: ${data.metadata?.source || "N/A"}`);
   console.log(`Currency: ${data.metadata?.currency || "N/A"}`);
   console.log(`Period: ${data.metadata?.period || "N/A"}`);
-  if (flags["target-currency"] || flags.currency) {
-    console.log(`Target currency: ${normalizeCurrency(flags["target-currency"] || flags.currency)}`);
+  if (targetCurrency) {
+    console.log(`Target currency: ${normalizeCurrency(targetCurrency)}`);
   }
   console.log("");
   for (const [role, range] of Object.entries(match.roles || {})) {
@@ -240,8 +352,8 @@ async function runSalary(flags) {
       max: range.max,
       period: range.period || data.metadata?.period || ""
     };
-    const converted = flags["target-currency"] || flags.currency
-      ? convertRange(sourceRange, flags["target-currency"] || flags.currency, currencyConfig)
+    const converted = targetCurrency
+      ? convertRange(sourceRange, targetCurrency, currencyConfig)
       : null;
     const mid = range.mid ? `, midpoint ${range.mid}` : "";
     const convertedText = converted ? ` / approx ${formatRange(converted)}` : "";

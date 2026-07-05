@@ -1,0 +1,16 @@
+description = "Run real job discovery and show the top 25 ranked matches."
+
+prompt = """
+# /scrape:25 - Top 25 Discovery Matches
+
+Run the local deterministic command first:
+
+```bash
+npm run scrape:show:25
+```
+
+Then summarize the strongest patterns from the top 25 ranked matches. Mention
+where the full ranked report and raw scrape collection were written.
+
+Do not paste the entire raw JSON into chat.
+"""

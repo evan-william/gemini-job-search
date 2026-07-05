@@ -1,0 +1,76 @@
+{
+  "queries": [
+    "junior ai engineer",
+    "ai product analyst",
+    "data analyst",
+    "software engineer"
+  ],
+  "locations": [
+    "remote",
+    "indonesia",
+    "singapore",
+    "asia"
+  ],
+  "providers": [
+    {
+      "type": "remotive",
+      "queries": ["ai", "data analyst", "software engineer"]
+    },
+    {
+      "type": "remoteok",
+      "queries": ["ai", "javascript", "data"]
+    },
+    {
+      "type": "arbeitnow"
+    }
+  ],
+  "boards": [
+    "https://jobs.ashbyhq.com/OpenAI"
+  ],
+  "filters": {
+    "titleIncludeAny": [
+      "ai",
+      "ml",
+      "data",
+      "software",
+      "engineer",
+      "developer",
+      "analyst",
+      "product",
+      "backend",
+      "frontend",
+      "fullstack",
+      "intern",
+      "junior"
+    ],
+    "mustIncludeAny": [
+      "ai",
+      "data",
+      "software",
+      "engineer",
+      "developer",
+      "analyst",
+      "product",
+      "intern",
+      "junior"
+    ],
+    "titleExcludeAny": [
+      "account director",
+      "sales",
+      "recruiter",
+      "human resources",
+      "hr administrator",
+      "nurse",
+      "physician",
+      "therapist",
+      "customer support"
+    ],
+    "locationAny": [
+      "remote",
+      "indonesia",
+      "singapore",
+      "asia",
+      "worldwide"
+    ]
+  }
+}

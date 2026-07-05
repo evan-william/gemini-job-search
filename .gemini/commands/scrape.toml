@@ -1,15 +1,15 @@
-description = "Find public job postings from a career page and rank them against profile/candidate.md."
+description = "Discover jobs across public providers and company boards, then rank them against profile/candidate.md."
 
 prompt = """
-# /scrape - Public Job Match Finder
+# /scrape - Job Discovery And Ranking
 
-Candidate profile:
+Run the local deterministic command first:
 
-```markdown
-@{profile/candidate.md}
+```bash
+npm run scrape
 ```
 
-Source URL, saved HTML, RSS text, or pasted job listing:
+If the user passes an argument, treat it as an optional note. Examples:
 
 ```text
 {{args}}
@@ -17,23 +17,18 @@ Source URL, saved HTML, RSS text, or pasted job listing:
 
 ## Task
 
-Find roles that appear relevant to the candidate, then rank them by fit.
+Use the npm script as the source of truth. It collects roles from public
+providers and configured company boards, saves the raw collection, then ranks
+the roles by fit against `profile/candidate.md`.
 
-If compensation is visible, keep the original currency and also normalize it
-to the user's requested target currency when they provide one. If the user says
-they prefer USD, IDR, EUR, or another currency, rank matching pay currency
-higher when the fit is otherwise similar.
+After the command finishes, summarize:
 
-For each role include:
+1. how many jobs were collected
+2. where the raw collection was written
+3. where the ranked report was written
+4. the printed top matches
+5. whether any result is actually strong enough to apply now
 
-1. role title
-2. company, if visible
-3. URL, if visible
-4. fit score from 0-100
-5. visible compensation and currency, if present
-6. strongest matching evidence
-7. biggest missing proof
-8. recommendation: apply now, apply after fixes, pause and build proof, or skip
-
-Be strict. Do not pretend a role is a strong match if the profile lacks proof.
+Do not re-rank manually unless the local command fails. Be strict. Do not
+pretend a role is a strong match if the profile lacks proof.
 """

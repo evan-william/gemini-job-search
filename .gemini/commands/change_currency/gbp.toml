@@ -1,0 +1,5 @@
+description = "Set secondary display currency to GBP."
+
+prompt = """
+Run `npm run change_currency:gbp`, then show the updated currency settings.
+"""

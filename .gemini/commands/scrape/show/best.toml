@@ -1,0 +1,13 @@
+description = "Alias for /scrape:best. Run real discovery and show top 1."
+
+prompt = """
+# /scrape:show:best - Top 1 Discovery Match
+
+Run:
+
+```bash
+npm run scrape:show:best
+```
+
+Summarize the single best match and mention the output files.
+"""

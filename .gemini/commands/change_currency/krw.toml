@@ -1,0 +1,5 @@
+description = "Set secondary display currency to KRW."
+
+prompt = """
+Run `npm run change_currency -- KRW`, then show the updated currency settings.
+"""

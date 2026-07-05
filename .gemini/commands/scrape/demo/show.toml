@@ -1,0 +1,14 @@
+description = "Run the bundled sample scrape and print the sample top match."
+
+prompt = """
+# /scrape:demo:show - Demo Scrape With Output
+
+Run:
+
+```bash
+npm run scrape:demo:show
+```
+
+Say clearly that this uses `samples/job-posting.md` and is not real job
+discovery.
+"""

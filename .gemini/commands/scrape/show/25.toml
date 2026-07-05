@@ -1,0 +1,14 @@
+description = "Run real discovery and show top 25."
+
+prompt = """
+# /scrape:show:25 - Top 25 Discovery Matches
+
+Run:
+
+```bash
+npm run scrape:show:25
+```
+
+Summarize the strongest patterns and mention the output files. Do not paste the
+raw JSON.
+"""

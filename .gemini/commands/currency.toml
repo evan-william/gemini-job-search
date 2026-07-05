@@ -1,0 +1,14 @@
+description = "Show current local currency display preferences."
+
+prompt = """
+# /currency - Show Currency Settings
+
+Run:
+
+```bash
+npm run currency:show
+```
+
+Report the primary currency, secondary currency, preferred pay currency, and
+supported currencies. Do not invent exchange rates.
+"""
