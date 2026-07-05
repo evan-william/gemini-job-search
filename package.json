@@ -1,7 +1,7 @@
 {
   "name": "gemini-job-search-os",
   "version": "0.1.0",
-  "description": "A local-first job search operating system that imports your CV, ranks public job posts, audits fit, converts visible pay, drafts outreach, prepares interviews, and supports optional Gemini/Codex review.",
+  "description": "Gemini/Codex-ready career launchpad that turns a CV and public job posts into ranked matches, proof-gap audits, portfolio moves, outreach drafts, and interview prep.",
   "type": "module",
   "main": "src/cli.js",
   "bin": {

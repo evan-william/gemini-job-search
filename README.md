@@ -1,16 +1,15 @@
 ﻿<p align="center">
-  <img src="assets/gemini.gif" alt="Gemini Job Search OS demo" width="820">
+  <img src="assets/gemini.gif" alt="Gemini Job Search OS logo" width="132">
 </p>
 
 # Gemini Job Search OS
 
-A local-first job search operating system for people who want better signal
-before they apply.
+Gemini/Codex-ready career launchpad for turning a CV and public job posts into
+ranked matches, proof-gap audits, portfolio moves, outreach drafts, and
+interview prep.
 
-Drop in a CV, add a job post or public career page, and run one command. The
-repo audits fit, finds ATS and proof gaps, creates portfolio project ideas,
-drafts outreach, prepares interview objections, ranks public job matches, and
-generates an AI-review prompt for Gemini, Codex, or any model interface.
+Drop in your CV, point it at a role or career page, and get a practical action
+plan before you apply.
 
 ```bash
 npm run launch
