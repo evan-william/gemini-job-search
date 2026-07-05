@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "source": "Example data only",
+    "currency": "USD",
+    "period": "annual",
+    "note": "Copy to salary/benchmarks.json and replace with private research."
+  },
+  "companies": [
+    {
+      "company": "BrightLoop Analytics",
+      "location": "Remote",
+      "roles": {
+        "junior_ai_product_analyst": {
+          "min": 55000,
+          "mid": 72000,
+          "max": 90000,
+          "notes": "Example range for demo only"
+        }
+      }
+    }
+  ]
+}

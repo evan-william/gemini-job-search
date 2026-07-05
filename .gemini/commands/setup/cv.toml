@@ -1,0 +1,41 @@
+description = "Read profile/candidate.pdf and update profile/candidate.md from the CV."
+
+prompt = """
+# /setup:cv - CV PDF Import
+
+You are importing the user's CV from `profile/candidate.pdf`.
+
+CV PDF:
+
+@{profile/candidate.pdf}
+
+Current candidate profile, if present:
+
+```markdown
+@{profile/candidate.md}
+```
+
+## Task
+
+Update `profile/candidate.md` from the CV PDF.
+
+Extract:
+
+- identity
+- target roles, if stated
+- education
+- experience
+- projects
+- skills
+- proof links
+- preferences or constraints, if stated
+
+Rules:
+
+1. Preserve factual accuracy.
+2. Do not invent missing details.
+3. If a section is missing from the CV, add a short TODO under that section.
+4. Keep private details minimal. If the CV includes full address, phone, or
+   personal ID numbers, ask whether to keep them out of the public profile.
+5. After updating, list the top missing inputs the user should add manually.
+"""

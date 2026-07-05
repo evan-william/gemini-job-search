@@ -1,0 +1,46 @@
+{
+  "name": "gemini-job-search-os",
+  "version": "0.1.0",
+  "description": "A local-first job search operating system that imports your CV, ranks public job posts, audits fit, converts visible pay, drafts outreach, prepares interviews, and supports optional Gemini/Codex review.",
+  "type": "module",
+  "main": "src/cli.js",
+  "bin": {
+    "gemini-job-search-os": "src/cli.js"
+  },
+  "scripts": {
+    "init": "node scripts/init.js",
+    "import-cv": "node scripts/import-cv.js",
+    "cv:refresh": "node scripts/import-cv.js --force",
+    "launch": "npm run init && npm run import-cv && node src/cli.js launch --profile profile/candidate.md --job samples/job-posting.md",
+    "scrape": "node src/cli.js scrape --profile profile/candidate.md --sources jobs/sources.txt --target-currency IDR",
+    "scrape:show": "node src/cli.js scrape --profile profile/candidate.md --sources jobs/sources.txt --target-currency IDR --show",
+    "scrape:demo": "node src/cli.js scrape --profile profile/candidate.md --source samples/job-posting.md --target-currency IDR",
+    "scrape:demo:show": "node src/cli.js scrape --profile profile/candidate.md --source samples/job-posting.md --target-currency IDR --show",
+    "gemini": "node scripts/gemini-disabled.js",
+    "demo": "node src/cli.js demo",
+    "audit": "node src/cli.js audit --profile profile/candidate.md --job samples/job-posting.md",
+    "portfolio": "node src/cli.js portfolio --profile profile/candidate.md --job samples/job-posting.md",
+    "outreach": "node src/cli.js outreach --profile profile/candidate.md --job samples/job-posting.md",
+    "interview": "node src/cli.js interview --profile profile/candidate.md --job samples/job-posting.md",
+    "salary": "node src/cli.js salary --company BrightLoop --target-currency IDR",
+    "prompt": "node src/cli.js prompt --workflow full --profile profile/candidate.md --job samples/job-posting.md",
+    "smoke": "npm run init && node scripts/smoke-test.js"
+  },
+  "keywords": [
+    "gemini",
+    "codex",
+    "resume",
+    "salary",
+    "currency",
+    "career",
+    "job-search",
+    "ai-agents",
+    "ats",
+    "portfolio",
+    "interview-prep"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}

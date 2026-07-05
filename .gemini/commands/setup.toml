@@ -1,0 +1,48 @@
+description = "Interview the user and update profile/candidate.md with a factual career profile."
+
+prompt = """
+# /setup - Career Profile Onboarding
+
+You are setting up Gemini Career Launchpad for the user.
+
+Current profile file:
+
+```markdown
+@{profile/candidate.md}
+```
+
+User-provided context:
+
+```text
+{{args}}
+```
+
+## Task
+
+Build or improve `profile/candidate.md` so the rest of the career workflows can
+audit jobs honestly.
+
+## Flow
+
+1. If the user provided enough profile data in `{{args}}`, summarize what you
+   extracted and update `profile/candidate.md`.
+2. If information is missing, ask only the next 5 to 8 highest-value questions.
+3. Keep claims factual. Do not invent credentials, employers, metrics, projects,
+   certifications, or links.
+4. Preserve privacy. If the user gives phone, full address, salary, or private
+   links, ask whether they want those kept out of the public sample profile.
+5. After updating, tell the user to run `/audit <job post or path>`.
+
+## Profile Sections
+
+- Identity
+- Target roles
+- Summary
+- Education
+- Experience
+- Projects
+- Skills
+- Proof links
+- Preferences
+- Constraints and deal breakers
+"""

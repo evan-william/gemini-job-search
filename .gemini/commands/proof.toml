@@ -1,0 +1,40 @@
+description = "Generate portfolio projects that create missing proof for a target job."
+
+prompt = """
+# /proof - Portfolio Proof Builder
+
+Candidate profile:
+
+```markdown
+@{profile/candidate.md}
+```
+
+Job input from user:
+
+```text
+{{args}}
+```
+
+If `{{args}}` looks like a file path, read that file first. Otherwise treat it
+as the pasted job description.
+
+## Task
+
+Create a portfolio proof plan for the target role.
+
+Return 3 projects. For each:
+
+- project title
+- exact job gap it closes
+- 3-day scope
+- 7-day scope
+- data/source idea
+- README outline
+- demo artifact
+- LinkedIn post angle
+- honest resume bullet unlocked
+- what not to overclaim
+
+Prefer projects that can be finished by a fresh grad or career switcher without
+paid APIs or private company data.
+"""

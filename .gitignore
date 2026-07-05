@@ -1,0 +1,43 @@
+node_modules/
+npm-debug.log*
+
+# Personal career data
+profile/candidate.md
+profile/candidate.pdf
+profile/candidate.raw.txt
+profile/candidate.backup-*.md
+profile/private/
+jobs/*.md
+!jobs/TEMPLATE.md
+jobs/sources.txt
+jobs/private/
+salary/benchmarks.json
+salary/currency.json
+workspace/**/*.pdf
+workspace/**/*.docx
+workspace/**/*.png
+workspace/**/*.jpg
+workspace/**/*.jpeg
+workspace/resume/*.md
+workspace/resume/*.tex
+
+# Generated outputs are personal by default.
+# Keep folder placeholders tracked.
+workspace/audits/*.md
+workspace/portfolio/*.md
+workspace/outreach/*.md
+workspace/interviews/*.md
+workspace/prompts/*.md
+workspace/scrape/*.md
+!workspace/**/.gitkeep
+
+# Local secrets
+.env
+.env.*
+gemini-key.txt
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

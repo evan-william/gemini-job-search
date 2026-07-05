@@ -1,0 +1,41 @@
+description = "Audit a job against profile/candidate.md like a recruiter and ATS screener."
+
+prompt = """
+# /audit - Recruiter and ATS Fit Audit
+
+Candidate profile:
+
+```markdown
+@{profile/candidate.md}
+```
+
+Job input from user:
+
+```text
+{{args}}
+```
+
+If `{{args}}` looks like a file path, read that file first. Otherwise treat it
+as the pasted job description.
+
+## Task
+
+Return a recruiter-style audit with:
+
+1. Apply now / apply after fixes / pause and build proof / skip.
+2. Overall fit score from 0 to 100.
+3. Matched evidence from the candidate profile.
+4. Missing ATS keywords.
+5. Missing proof, separate from missing keywords.
+6. Seniority risk.
+7. Credibility risk, meaning claims that would be hard to defend in interview.
+8. Resume positioning angle.
+9. Three concrete fixes before applying.
+
+Rules:
+
+- Do not write a resume yet.
+- Do not invent experience.
+- If a gap is real, say it plainly and suggest adjacent framing.
+- Keep the output practical enough that the user can act today.
+"""

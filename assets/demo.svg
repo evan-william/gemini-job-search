@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="420" viewBox="0 0 980 420" role="img" aria-label="Gemini Job Search OS workflow preview">
+  <rect width="980" height="420" rx="18" fill="#0f172a"/>
+  <rect x="28" y="28" width="924" height="364" rx="14" fill="#111827" stroke="#334155"/>
+  <circle cx="56" cy="56" r="7" fill="#ef4444"/>
+  <circle cx="78" cy="56" r="7" fill="#f59e0b"/>
+  <circle cx="100" cy="56" r="7" fill="#22c55e"/>
+  <text x="132" y="62" fill="#cbd5e1" font-family="Consolas, monospace" font-size="18">gemini-job-search-os</text>
+  <text x="56" y="112" fill="#38bdf8" font-family="Consolas, monospace" font-size="22">$ npm run scrape</text>
+  <text x="56" y="154" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">ok read profile/candidate.md</text>
+  <text x="56" y="192" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">ok ranked public career page matches</text>
+  <text x="56" y="230" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">ok detected pay: IDR 12M - 18M monthly</text>
+  <text x="56" y="268" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">ok converted target currency and wrote workspace/scrape/</text>
+  <rect x="56" y="306" width="374" height="52" rx="8" fill="#064e3b"/>
+  <text x="76" y="339" fill="#bbf7d0" font-family="Consolas, monospace" font-size="19">Decision: apply after fixes</text>
+  <rect x="456" y="306" width="224" height="52" rx="8" fill="#1e3a8a"/>
+  <text x="476" y="339" fill="#bfdbfe" font-family="Consolas, monospace" font-size="19">Fit: 70 / 100</text>
+  <rect x="706" y="306" width="188" height="52" rx="8" fill="#581c87"/>
+  <text x="726" y="339" fill="#e9d5ff" font-family="Consolas, monospace" font-size="19">Pay: IDR</text>
+</svg>

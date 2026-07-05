@@ -1,0 +1,39 @@
+description = "Find public job postings from a career page and rank them against profile/candidate.md."
+
+prompt = """
+# /scrape - Public Job Match Finder
+
+Candidate profile:
+
+```markdown
+@{profile/candidate.md}
+```
+
+Source URL, saved HTML, RSS text, or pasted job listing:
+
+```text
+{{args}}
+```
+
+## Task
+
+Find roles that appear relevant to the candidate, then rank them by fit.
+
+If compensation is visible, keep the original currency and also normalize it
+to the user's requested target currency when they provide one. If the user says
+they prefer USD, IDR, EUR, or another currency, rank matching pay currency
+higher when the fit is otherwise similar.
+
+For each role include:
+
+1. role title
+2. company, if visible
+3. URL, if visible
+4. fit score from 0-100
+5. visible compensation and currency, if present
+6. strongest matching evidence
+7. biggest missing proof
+8. recommendation: apply now, apply after fixes, pause and build proof, or skip
+
+Be strict. Do not pretend a role is a strong match if the profile lacks proof.
+"""

@@ -1,0 +1,34 @@
+description = "Write recruiter outreach based on real profile evidence and a target role."
+
+prompt = """
+# /outreach - Recruiter DM and Email
+
+Candidate profile:
+
+```markdown
+@{profile/candidate.md}
+```
+
+Job or target context:
+
+```text
+{{args}}
+```
+
+## Task
+
+Write:
+
+1. LinkedIn connection request under 280 characters.
+2. Follow-up DM under 900 characters.
+3. Cold email under 140 words.
+4. Three alternative subject lines.
+5. One warning about what must be customized before sending.
+
+Rules:
+
+- Specific beats enthusiastic.
+- Do not say "perfect fit", "passionate", "rockstar", or "hit the ground running".
+- Mention one concrete proof point from the profile.
+- Do not fake a referral or prior relationship.
+"""

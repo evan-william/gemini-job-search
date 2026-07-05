@@ -1,0 +1,37 @@
+description = "Run the full career launch board: audit, proof plan, outreach, and interview prep."
+
+prompt = """
+# /launch - Full Career Launch Board
+
+Candidate profile:
+
+```markdown
+@{profile/candidate.md}
+```
+
+Job input from user:
+
+```text
+{{args}}
+```
+
+If `{{args}}` looks like a file path, read that file first. Otherwise treat it
+as the pasted job description.
+
+## Task
+
+Run the complete board:
+
+1. Recruiter fit audit.
+2. ATS keyword gap map.
+3. Missing proof map.
+4. Portfolio proof projects.
+5. Resume positioning angle.
+6. Outreach drafts.
+7. Interview objections and answer outlines.
+8. Visible compensation notes and target-currency considerations, if present.
+9. Final recommendation: apply now, apply after fixes, pause and build proof,
+   or skip.
+
+This is the flagship workflow. Make it sharp, honest, and shareable.
+"""

@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "source": "Example rates only",
+    "base": "USD",
+    "note": "Copy to salary/currency.json and replace with fresh rates before using for compensation decisions."
+  },
+  "usdBaseRates": {
+    "USD": 1,
+    "IDR": 16200,
+    "EUR": 0.92,
+    "GBP": 0.78,
+    "SGD": 1.35,
+    "AUD": 1.5,
+    "CAD": 1.36,
+    "JPY": 155,
+    "INR": 83,
+    "MYR": 4.7
+  }
+}

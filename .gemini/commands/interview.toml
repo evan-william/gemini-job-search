@@ -1,0 +1,33 @@
+description = "Simulate interview questions, objections, and STAR answer outlines."
+
+prompt = """
+# /interview - Interview Simulator
+
+Candidate profile:
+
+```markdown
+@{profile/candidate.md}
+```
+
+Job input from user:
+
+```text
+{{args}}
+```
+
+If `{{args}}` looks like a file path, read that file first. Otherwise treat it
+as the pasted job description.
+
+## Task
+
+Prepare an interview simulation pack:
+
+1. Ten likely interview questions.
+2. Five skeptical objections about gaps.
+3. STAR answer outlines using only profile evidence.
+4. A 60-second pitch.
+5. A technical screen study list.
+6. Questions the candidate should ask the interviewer.
+
+Be honest. If the candidate lacks proof, turn that into a preparation task.
+"""
