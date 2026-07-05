@@ -4,35 +4,50 @@
 
 # Gemini Job Search OS
 
-Gemini/Codex-ready career launchpad for turning a CV and public job posts into
-ranked matches, proof-gap audits, portfolio moves, outreach drafts, and
-interview prep.
+An open-source career radar that turns your CV into ranked job targets,
+evidence gaps, portfolio moves, outreach drafts, and interview prep.
 
-Drop in your CV, point it at a role or career page, and get a practical action
-plan before you apply.
+Built local-first for [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+and [Codex](https://openai.com/codex/), with public-board discovery for
+[Ashby](https://www.ashbyhq.com/), [Greenhouse](https://www.greenhouse.com/),
+[Lever](https://www.lever.co/), and readable job APIs.
+
+Drop in `candidate.pdf`, run discovery, and get a shortlist that tells you what
+to apply to, what to skip, and what proof you still need before reaching out.
 
 ```bash
 npm run launch
 ```
 
+<p align="center">
+  <a href="#discover-jobs-across-sources"><strong><u>Discover jobs</u></strong></a>
+  ·
+  <a href="#use-your-own-cv"><strong><u>Import your CV</u></strong></a>
+  ·
+  <a href="#compensation-intelligence"><strong><u>Currency-aware pay</u></strong></a>
+  ·
+  <a href="#optional-ai-agent-layer"><strong><u>Gemini + Codex</u></strong></a>
+</p>
+
 ## What This Is
 
-Most AI job tools rewrite resumes. That is not enough.
+Most AI job tools start at the resume. This starts earlier: deciding whether a
+role is worth your time.
 
-Hiring teams reject candidates because the evidence is weak, the portfolio does
-not prove the role, the outreach is generic, or the candidate is applying to the
-wrong jobs. This repo turns the job search into a repeatable pipeline:
+It scans public sources, ranks openings against your private profile, converts
+visible pay into your display currencies, and then helps you build the missing
+evidence before you apply.
 
 ```text
 profile/candidate.pdf
                  +
-          job posting markdown
+        public job sources
                  |
                  v
- CV import -> candidate.md -> recruiter audit -> proof gap map
-                 |          |             |
-                 v          v             v
-          resume draft   outreach   interview prep
+ CV import -> job discovery -> ranked shortlist -> proof gap map
+                 |              |               |
+                 v              v               v
+          private profile   outreach       interview prep
                  \__________|_____________/
                             v
                    apply / fix / pause / skip

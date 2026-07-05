@@ -1,7 +1,7 @@
 {
   "name": "gemini-job-search-os",
   "version": "0.1.0",
-  "description": "Gemini/Codex-ready career launchpad that turns a CV and public job posts into ranked matches, proof-gap audits, portfolio moves, outreach drafts, and interview prep.",
+  "description": "Open-source career radar for turning a CV and public job sources into ranked matches, proof gaps, portfolio moves, outreach drafts, and interview prep.",
   "type": "module",
   "main": "src/cli.js",
   "bin": {
